@@ -1,0 +1,12 @@
+name = "ctc-utd-website"
+main = "./.svelte-kit/cloudflare/index.js"
+
+[env.production]
+routes = []
+
+[build]
+command = "npm run build"
+
+[assets]
+directory = "./.svelte-kit/cloudflare"
+binding = "ASSETS"
