@@ -1,7 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@config "../../../tailwind.config.cjs";
+@import "../../../node_modules/tailwindcss/index.css";
 
 @theme {
 	--color-cream: #FBF8F3;
