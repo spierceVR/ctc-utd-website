@@ -31,6 +31,9 @@
 				<a href={clubInfo.links.email} class="hover:text-white transition">
 					{clubInfo.links.emailAddress}
 				</a>
+				<a href="{base}/officers" class="text-stone-400 hover:text-white transition">
+					Officer Guide
+				</a>
 			</div>
 		</div>
 

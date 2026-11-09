@@ -1,35 +1,23 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-
-	interface Event {
-		id: string;
-		title: string;
-		date: string;
-		recurringBadge?: string;
-		time: string;
-		location: string;
-		description: string;
-		highlights?: string[];
-		image?: string | null;
-		category?: string;
-		featured?: boolean;
-	}
+	import { resolveEventImage, type ClubEvent } from '$lib/utils/googleSheets';
 
 	interface Props {
-		event: Event;
+		event: ClubEvent;
 	}
 
 	let { event }: Props = $props();
+	const imageSrc = $derived(resolveEventImage(event.image, base));
 </script>
 
 <a
-	href="{base}/events/{event.id}"
+	href="{base}/events?id={encodeURIComponent(event.id)}"
 	class="card-surface overflow-hidden flex flex-col h-full group hover:-translate-y-1 transition-all"
 >
-	{#if event.image}
+	{#if imageSrc}
 		<div class="h-56 bg-dark-cream overflow-hidden flex items-center justify-center p-3">
 			<img
-				src="{base}{event.image}"
+				src={imageSrc}
 				alt={event.title}
 				class="h-full w-auto object-contain rounded-lg group-hover:scale-105 transition-transform duration-300"
 			/>

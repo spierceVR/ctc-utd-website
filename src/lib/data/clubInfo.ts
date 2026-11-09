@@ -34,6 +34,11 @@ export const clubInfo = {
 		email: 'mailto:ctc.utd@gmail.com',
 		emailAddress: 'ctc.utd@gmail.com'
 	},
+	/**
+	 * Paste your published Google Sheet CSV URL here:
+	 * (In Google Sheets: File -> Share -> Publish to web -> Select sheet & "Comma-separated values (.csv)" -> Publish)
+	 */
+	googleSheetCsvUrl: '',
 	quickLinks: [
 		{
 			title: 'Join Our Discord Server',

@@ -1,11 +1,24 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import Hero from '$lib/components/Hero.svelte';
-	import events from '$lib/data/events.js';
+	import defaultEvents from '$lib/data/events.js';
+	import { fetchLiveEvents, type ClubEvent } from '$lib/utils/googleSheets';
 
-	const sortedEvents = [...events].sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+	let allEvents = $state<ClubEvent[]>(defaultEvents as ClubEvent[]);
+
+	const sortedEvents = $derived(
+		[...allEvents].sort((a, b) => {
+			const timeA = new Date(a.date).getTime();
+			const timeB = new Date(b.date).getTime();
+			if (Number.isNaN(timeA) || Number.isNaN(timeB)) return 0;
+			return timeB - timeA;
+		})
 	);
+
+	onMount(async () => {
+		allEvents = await fetchLiveEvents();
+	});
 </script>
 
 <svelte:head>
@@ -29,7 +42,7 @@
 	<div class="space-y-4">
 		{#each sortedEvents as event (event.id)}
 			<a
-				href="{base}/events/{event.id}"
+				href="{base}/events?id={encodeURIComponent(event.id)}"
 				class="card-surface p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-seal-red transition group"
 			>
 				<div>

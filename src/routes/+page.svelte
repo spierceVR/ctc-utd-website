@@ -1,10 +1,17 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import EventCard from '$lib/components/EventCard.svelte';
-	import events from '$lib/data/events.js';
+	import defaultEvents from '$lib/data/events.js';
 	import { clubInfo } from '$lib/data/clubInfo';
+	import { fetchLiveEvents, type ClubEvent } from '$lib/utils/googleSheets';
 
-	const featuredEvents = events.slice(0, 3);
+	let allEvents = $state<ClubEvent[]>(defaultEvents as ClubEvent[]);
+	const featuredEvents = $derived(allEvents.slice(0, 3));
+
+	onMount(async () => {
+		allEvents = await fetchLiveEvents();
+	});
 </script>
 
 <svelte:head>
